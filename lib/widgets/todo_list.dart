@@ -1,87 +1,74 @@
 import 'package:flutter/material.dart';
+// import 'package:todo_app/widgets/todo.dart';
 
 import '../constants/colors.dart';
 
-class TodoItem extends StatelessWidget {
+// ignore: must_be_immutable
+class TodoItem extends StatefulWidget {
   final String id;
   final String todoText;
-  bool isDone;
+
+  bool isDone = false;
   // final Todo todo;
 
-  TodoItem(
-      {Key? key,
-      required this.id,
-      required this.todoText,
-      required this.isDone})
-      : super(key: key);
+  TodoItem({
+    Key? key,
+    required this.id,
+    required this.todoText,
+    this.isDone = false,
+  }) : super(key: key);
 
   @override
+  State<TodoItem> createState() => _TodoItemState();
+}
+
+class _TodoItemState extends State<TodoItem> {
+  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        print('Ghana');
-      },
+    return Container(
+      alignment: Alignment.center,
+      height: 80,
+      decoration: BoxDecoration(
+          color: widget.isDone ? Colors.white38 : Colors.white,
+          borderRadius: BorderRadius.circular(16)),
+      child: ListTile(
+        onTap: () {
+          setState(() {
+            tapTask;
+            print('Print');
+          });
+        },
 
-      //Tile
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 16),
-        height: 80,
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(20)),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    isDone ? Icons.check_box : Icons.check_box_outline_blank,
-                    size: 20,
-                    color: tdBlue,
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  SizedBox(
-                    width: 240,
-                    child: Text(
-                      todoText,
-                      softWrap: true,
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: tdBlack,
-                          decoration:
-                              isDone ? TextDecoration.lineThrough : null),
-                    ),
-                  ),
-                ],
-              ),
-
-              //Delete Button
-
-              GestureDetector(
-                onTap: () {
-                  print('Delete');
-                },
-
-                //Design
-                child: Container(
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(12)),
-                  child: const Icon(
-                    Icons.delete,
-                    color: Colors.white,
-                  ),
-                ),
-              )
-            ],
-          ),
+        //Design
+        title: Text('Meeting with Joan',
+            softWrap: true,
+            style: TextStyle(
+                fontSize: 16,
+                color: tdBlack,
+                decoration: widget.isDone ? TextDecoration.lineThrough : null)),
+        leading: Icon(
+            widget.isDone ? Icons.check_box : Icons.check_box_outline_blank),
+        trailing: GestureDetector(
+          onTap: () {
+            print('Delete');
+          },
+          child: Container(
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                  color: Colors.red, borderRadius: BorderRadius.circular(12)),
+              child: const Icon(
+                Icons.delete,
+                color: Colors.white,
+              )),
         ),
       ),
     );
+  }
+
+  void tapTask(bool isDone) {
+    setState(() {
+      isDone = !isDone;
+    });
   }
 }

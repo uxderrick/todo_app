@@ -26,13 +26,4 @@ class SearchBox extends StatelessWidget {
 }
 
 //Modal
-class Modal extends StatelessWidget {
-  const Modal({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      child: TextField(),
-    );
-  }
-}
